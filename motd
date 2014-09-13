@@ -1,0 +1,17 @@
+ __        __            _
+ \ \      / /__  _ __ __| |_ __  _ __ ___  ___ ___
+  \ \ /\ / / _ \| '__/ _` | '_ \| '__/ _ \/ __/ __|
+   \ V  V / (_) | | | (_| | |_) | | |  __/\__ \__ \
+    \_/\_/ \___/|_|  \__,_| .__/|_|  \___||___/___/
+                          |_|
+
+.=====================================================.
+             SmartOS %brand% (%name% %version%)
+       MySQL root - PASS : %MYSQL_PW%      
+       Wordpress - Web Interface: https://%WEBUI_ADDRESS%
+       Wordpress -    DB: wordpress
+       Wordpress -  USER: wordpressdba
+       Wordpress -  PASS: %WP_PW%
+
+  <------ Feedback @trentster abn.me/fusionpbx ------>
+  

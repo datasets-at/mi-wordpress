@@ -1,0 +1,72 @@
+#!/usr/bin/bash
+#
+# Put customizations to your image in this file.
+
+PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
+
+# Exit if any commands fail
+set -o errexit
+
+# Ensure we have updated standard packages
+echo "* Updating standard packages.";
+pkg_delete -v nodejs smtools zoneinit
+pkg_add -v nodejs smtools zoneinit
+
+# Configuring nginx packages
+echo "* Configuring nginx.";
+
+mkdir -p /opt/local/www/wordpress
+mkdir -p /opt/local/etc/nginx/sites-enabled
+mkdir -p /opt/local/etc/nginx/sites-available
+mkdir -p /opt/local/etc/nginx/globals
+mkdir -p /var/db/ssl
+
+# build nginx in /root because /root gets cleaned up automatically
+NGINXVERSION=1.7.4
+PURGEVERSION=2.1
+
+cd /root
+curl -kLO http://nginx.org/download/nginx-${NGINXVERSION}.tar.gz
+curl -kLO http://labs.frickle.com/files/ngx_cache_purge-${PURGEVERSION}.tar.gz
+tar -xvzf nginx-${NGINXVERSION}.tar.gz
+tar -xvzf ngx_cache_purge-${PURGEVERSION}.tar.gz
+cd nginx-${NGINXVERSION}
+./configure --user=www --group=www --with-ld-opt='-L/opt/local/lib -Wl,-R/opt/local/lib' --prefix=/opt/local --sbin-path=/opt/local/sbin --conf-path=/opt/local/etc/nginx/nginx.conf --pid-path=/var/db/nginx/nginx.pid --lock-path=/var/db/nginx/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/db/nginx/client_body_temp --http-proxy-temp-path=/var/db/nginx/proxy_temp --http-fastcgi-temp-path=/var/db/nginx/fstcgi_temp --with-mail_ssl_module --with-http_ssl_module --with-http_dav_module --with-http_realip_module --with-ipv6 --with-http_stub_status_module --with-http_geoip_module --add-module=$HOME/ngx_cache_purge-${PURGEVERSION} --with-http_spdy_module
+make
+make install
+svcadm enable nginx
+svcadm enable php-fpm
+svcadm restart nginx
+svcadm restart php-fpm
+
+# Configuring wp-cli packages
+echo "* Configuring wp-cli.";
+
+cd /root
+curl -L https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > wp-cli.phar
+chmod +x wp-cli.phar
+mv wp-cli.phar /opt/local/bin/wp
+
+mkdir -p /opt/local/etc/nginx/sites-enabled
+mkdir -p /opt/local/etc/nginx/sites-available
+
+cp /root/nginx.conf /opt/local/etc/nginx/nginx.conf
+cp /root/php.ini /opt/local/etc/php.ini
+
+chown -R www:www /opt/local/www
+chown www:www /opt/local/etc/nginx/sites-enabled
+chown www:www /opt/local/etc/nginx/sites-available
+chown www:www /var/db/ssl
+
+ln -s /opt/local/etc/nginx/sites-available/wordpress-ssl.conf /opt/local/etc/nginx/sites-enabled/
+
+svcadm restart nginx && svcadm restart php-fpm
+svcadm enable postfix
+
+# Clean up
+echo "* Cleaning up."
+pkg_delete -v gcc47 gmake
+rm -rf /root/*
+
+# Prepare image for provisioning
+sm-prepare-image -y
