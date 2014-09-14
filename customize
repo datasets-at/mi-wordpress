@@ -66,6 +66,7 @@ ln -s /opt/local/etc/nginx/sites-available/wordpress.conf /opt/local/etc/nginx/s
 
 svcadm restart nginx && svcadm restart php-fpm
 svcadm enable postfix
+newaliases
 
 # Clean up
 echo "* Cleaning up."

@@ -24,7 +24,7 @@ nano
 php55-dom
 php55-xmlrpc
 php55-opcache
-memcached
-php55-memcache
-php55-memcached
+#memcached
+#php55-memcache
+#php55-memcached
 unzip

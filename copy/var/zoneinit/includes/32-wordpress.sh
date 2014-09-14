@@ -5,7 +5,7 @@ log "generating ssl certs"
 log "enabling http services"
 svcadm enable nginx
 svcadm enable php-fpm
-svcadm enable memcached
+#svcadm enable memcached
 
 
 log "Creating Wordpress DB"
