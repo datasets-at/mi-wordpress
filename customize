@@ -23,15 +23,18 @@ mkdir -p /var/db/ssl
 
 # build nginx in /root because /root gets cleaned up automatically
 NGINXVERSION=1.7.4
-PURGEVERSION=2.1
+# PURGEVERSION=2.1
 
 cd /root
 curl -kLO http://nginx.org/download/nginx-${NGINXVERSION}.tar.gz
-curl -kLO http://labs.frickle.com/files/ngx_cache_purge-${PURGEVERSION}.tar.gz
+curl -kLO https://github.com/FRiCKLE/ngx_cache_purge/archive/master.zip
+# curl -kLO http://labs.frickle.com/files/ngx_cache_purge-${PURGEVERSION}.tar.gz
 tar -xvzf nginx-${NGINXVERSION}.tar.gz
-tar -xvzf ngx_cache_purge-${PURGEVERSION}.tar.gz
+unzip master.zip
+# tar -xvzf ngx_cache_purge-${PURGEVERSION}.tar.gz
 cd nginx-${NGINXVERSION}
-./configure --user=www --group=www --with-ld-opt='-L/opt/local/lib -Wl,-R/opt/local/lib' --prefix=/opt/local --sbin-path=/opt/local/sbin --conf-path=/opt/local/etc/nginx/nginx.conf --pid-path=/var/db/nginx/nginx.pid --lock-path=/var/db/nginx/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/db/nginx/client_body_temp --http-proxy-temp-path=/var/db/nginx/proxy_temp --http-fastcgi-temp-path=/var/db/nginx/fstcgi_temp --with-mail_ssl_module --with-http_ssl_module --with-http_dav_module --with-http_realip_module --with-ipv6 --with-http_stub_status_module --with-http_geoip_module --add-module=$HOME/ngx_cache_purge-${PURGEVERSION} --with-http_spdy_module
+# ./configure --user=www --group=www --with-ld-opt='-L/opt/local/lib -Wl,-R/opt/local/lib' --prefix=/opt/local --sbin-path=/opt/local/sbin --conf-path=/opt/local/etc/nginx/nginx.conf --pid-path=/var/db/nginx/nginx.pid --lock-path=/var/db/nginx/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/db/nginx/client_body_temp --http-proxy-temp-path=/var/db/nginx/proxy_temp --http-fastcgi-temp-path=/var/db/nginx/fstcgi_temp --with-mail_ssl_module --with-http_ssl_module --with-http_dav_module --with-http_realip_module --with-ipv6 --with-http_stub_status_module --with-http_geoip_module --add-module=$HOME/ngx_cache_purge-${PURGEVERSION} --with-http_spdy_module
+./configure --user=www --group=www --with-ld-opt='-L/opt/local/lib -Wl,-R/opt/local/lib' --prefix=/opt/local --sbin-path=/opt/local/sbin --conf-path=/opt/local/etc/nginx/nginx.conf --pid-path=/var/db/nginx/nginx.pid --lock-path=/var/db/nginx/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/db/nginx/client_body_temp --http-proxy-temp-path=/var/db/nginx/proxy_temp --http-fastcgi-temp-path=/var/db/nginx/fstcgi_temp --with-mail_ssl_module --with-http_ssl_module --with-http_dav_module --with-http_realip_module --with-ipv6 --with-http_stub_status_module --with-http_geoip_module --add-module=$HOME/ngx_cache_purge-master --with-http_spdy_module
 make
 make install
 svcadm enable nginx
@@ -58,7 +61,8 @@ chown www:www /opt/local/etc/nginx/sites-enabled
 chown www:www /opt/local/etc/nginx/sites-available
 chown www:www /var/db/ssl
 
-ln -s /opt/local/etc/nginx/sites-available/wordpress-ssl.conf /opt/local/etc/nginx/sites-enabled/
+# ln -s /opt/local/etc/nginx/sites-available/wordpress-ssl.conf /opt/local/etc/nginx/sites-enabled/
+ln -s /opt/local/etc/nginx/sites-available/wordpress.conf /opt/local/etc/nginx/sites-enabled/
 
 svcadm restart nginx && svcadm restart php-fpm
 svcadm enable postfix

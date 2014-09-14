@@ -28,12 +28,28 @@ if [[ ! -z $PUBLIC_IP ]]; then
         WEBUI_ADDRESS=$PUBLIC_IP
 fi
 
+log "mdata-get wordpress metadata"
+WPSITE_URL=${WPSITE_URL:-$(mdata-get wpsite_url 2>/dev/null)} || \
+WPSITE_URL=${WEBUI_ADDRESS};
+
+WPHOME_URL=${WPHOME_URL:-$(mdata-get wphome_url 2>/dev/null)} || \
+WPHOME_URL=${WEBUI_ADDRESS};
+
+WPADMIN_USR=${WPADMIN_USR:-$(mdata-get wpadmin_usr 2>/dev/null)} || \
+WPADMIN_USR=${wpadmin};
+
+WPADMIN_PSW=${WPADMIN_PSW:-$(mdata-get wpadmin_psw 2>/dev/null)} || \
+WPADMIN_PSW=${wppass};
+
+WPADMIN_EMA=${WPADMIN_EMA:-$(mdata-get wpadmin_ema 2>/dev/null)} || \
+WPADMIN_EMA=${admin@site.local};
+
 log "Installing Wordpress via wp_cli"
 
 cd /opt/local/www/wordpress
 /opt/local/bin/wp core download
 /opt/local/bin/wp core config --dbname="wordpressdb" --dbuser="wordpressdba" --dbpass="$WP_PW" --dbprefix="_wpmy"
-/opt/local/bin/wp core install --url="${WEBUI_ADDRESS}" --title="Wordpress Site" --admin_user="onyxadmin" --admin_password="onyxpass" --admin_email="mark@onyxit.com.au"
+/opt/local/bin/wp core install --url="${WPSITE_URL}" --title="Wordpress Site" --admin_user="${WPADMIN_USR}" --admin_password="${WPADMIN_PSW}" --admin_email="${WPADMIN_EMA}"
 /opt/local/bin/wp plugin install wordpress-seo
 /opt/local/bin/wp plugin install nginx-helper
 /opt/local/bin/wp plugin activate wordpress-seo
@@ -52,3 +68,6 @@ crontab /tmp/mycron
 
 gsed -i "s/%WEBUI_ADDRESS%/${WEBUI_ADDRESS}/" /etc/motd
 gsed -i "s/%WP_PW%/${WP_PW}/" /etc/motd
+gsed -i "s/%WPSITE_URL%/${WPSITE_URL}/" /etc/motd
+gsed -i "s/%WPADMIN_USR%/${WPADMIN_USR}/" /etc/motd
+gsed -i "s/%WPADMIN_PSW%/${WPADMIN_PSW}/" /etc/motd

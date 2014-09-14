@@ -27,3 +27,4 @@ php55-opcache
 memcached
 php55-memcache
 php55-memcached
+unzip

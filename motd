@@ -6,12 +6,16 @@
                           |_|
 
 .=====================================================.
-             SmartOS %brand% (%name% %version%)
-       MySQL root - PASS : %MYSQL_PW%      
-       Wordpress - Web Interface: https://%WEBUI_ADDRESS%
-       Wordpress -    DB: wordpress
-       Wordpress -  USER: wordpressdba
-       Wordpress -  PASS: %WP_PW%
+            SmartOS %brand% (%name% %version%)
+      IP Address: %WEBUI_ADDRESS%
+      MySQL root - PASS : %MYSQL_PW%      
+      Wordpress DB: wordpress
+      Wordpress DB USER: wordpressdba
+      Wordpress DB PASS: %WP_PW%
+
+      Wordpress - Web Interface: http://%WPSITE_URL%
+      Wordpress - Admin Username: %WPADMIN_USR%
+      Wordpress - Admin Password: %WPADMIN_PSW%
 
   <------ Feedback @trentster abn.me/wordpress ------>
   
