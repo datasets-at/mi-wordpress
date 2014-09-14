@@ -36,13 +36,13 @@ WPHOME_URL=${WPHOME_URL:-$(mdata-get wphome_url 2>/dev/null)} || \
 WPHOME_URL=${WEBUI_ADDRESS};
 
 WPADMIN_USR=${WPADMIN_USR:-$(mdata-get wpadmin_usr 2>/dev/null)} || \
-WPADMIN_USR=${wpadmin};
+WPADMIN_USR="wpadmin";
 
 WPADMIN_PSW=${WPADMIN_PSW:-$(mdata-get wpadmin_psw 2>/dev/null)} || \
-WPADMIN_PSW=${wppass};
+WPADMIN_PSW="wppass";
 
 WPADMIN_EMA=${WPADMIN_EMA:-$(mdata-get wpadmin_ema 2>/dev/null)} || \
-WPADMIN_EMA=${admin@site.local};
+WPADMIN_EMA="admin@site.local";
 
 log "Installing Wordpress via wp_cli"
 
