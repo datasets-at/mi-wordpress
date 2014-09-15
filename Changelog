@@ -1,4 +1,22 @@
 # Changelog
 
-- wordpress-1.1
+0.1.1
 
+* Compiles Nginx 1.7.4 with FastCGI Cache purge Module, Geoip and HTTPS SPDY support
+* Generates unique self-signed SSL certs on zoneinit /var/db/ssl/certs/
+* Nginx configured to store FastCGI cache in /var/run/nginx-cache
+* Configures php 5.5 with php-fpm configured to use opcache
+* Mdata-get zoneinit support for "wpsite_url" "wphome_url" "wpadmin_usr" "wpadmin_psw" "wpadmin_ema"
+* If mdata-get metadata is not supplied it will fall-back to defaults
+* Generates unique mysql root password
+* Generates unique wordpress db password
+* All custom information displayed in /etc/motd
+* At zone init - installs and configures LATEST version of Wordpress via wp-cli
+* At zone init - installs/activates LATEST "Yoast wordpess SEO" and "nginx cache plugin" via wp-cli
+* At optimal wp-config.php settings for efficiency
+* Will auto purge wordpress page/post from the cache on edit or change
+* Configured to serve hundreds of concurrent requests at blazing speeds with minimal cpu or db load
+* Enables system cron entry for wp-cron
+* Auto tunes MySQL Percona my.cnf based on memory provisioning size
+* Includes optional wordpress-ssl.conf to be used should you want ssl site
+* Installs https://github.com/rlerdorf/opcache-status in webroot/opcache/opcache.php only accessible from specified ip range in nginx wordpress.conf - currently 10.1.1.0/24 for Cache Monitoring

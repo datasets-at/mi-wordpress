@@ -4,18 +4,15 @@
    \ V  V / (_) | | | (_| | |_) | | |  __/\__ \__ \
     \_/\_/ \___/|_|  \__,_| .__/|_|  \___||___/___/
                           |_|
-
+          SmartOS %brand% (%name% %version%)
 .=====================================================.
-            SmartOS %brand% (%name% %version%)
-      IP Address: %WEBUI_ADDRESS%
-      MySQL root - PASS : %MYSQL_PW%      
-      Wordpress DB: wordpress
-      Wordpress DB USER: wordpressdba
-      Wordpress DB PASS: %WP_PW%
+            
+    IP Address    : %WEBUI_ADDRESS%
+    MySQL root pw : %MYSQL_PW%
 
-      Wordpress - Web Interface: http://%WPSITE_URL%
-      Wordpress - Admin Username: %WPADMIN_USR%
-      Wordpress - Admin Password: %WPADMIN_PSW%
+    Wordpress - Web Interface: http://%WPSITE_URL%
+    Wordpress - Admin Username: %WPADMIN_USR%
+    Wordpress - Admin Password: %WPADMIN_PSW%
 
-  <------ Feedback @trentster abn.me/wordpress ------>
-  
+<======= Feedback @trentster abn.me/wordpress =======>
+ 
