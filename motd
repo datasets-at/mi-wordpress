@@ -8,7 +8,7 @@
 .=====================================================.
             
     IP Address    : %WEBUI_ADDRESS%
-    MySQL root pw : %MYSQL_PW%
+    MySQL-root-pw : %MYSQL_PW%
 
     Wordpress - Web Interface: http://%WPSITE_URL%
     Wordpress - Admin Username: %WPADMIN_USR%

@@ -17,7 +17,7 @@ echo "grant all privileges  on wordpressdb.* to wordpressdba@localhost identifie
 echo "FLUSH PRIVILEGES;" >> /tmp/wp.sql
 
 log "Injecting Wordpress SQL"
-MYSQL_PW=$(/opt/local/bin/grep MySQL /etc/motd | /opt/local/bin/awk '{$1=""; print $6}');
+MYSQL_PW=$(/opt/local/bin/grep MySQL /etc/motd | /opt/local/bin/awk '{$1=""; print $3}');
 /opt/local/bin/mysql -u root -p$MYSQL_PW < /tmp/wp.sql
 
 log "determine the webui address for the motd"
