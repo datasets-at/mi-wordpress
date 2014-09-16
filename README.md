@@ -28,7 +28,7 @@ result:  [Custom Machine Provisioned](http://abn.me/mdresu "metadata result scre
 ## ssl support
 An auto generated self signed certificate is created at zone init and there is a ready to go nginx conf file that just has to be enabled in: 
 
-    /opt/local/etc/nginx/sites/available/wordpress-ssl.conf
+    /opt/local/etc/nginx/sites-available/wordpress-ssl.conf
 Please note in order for selective cache purge to work with SSL you will need to install a valid SSL Certificate for your site or figure out how to make "curl" ignore SSL validation.
 
 ## 0.1.1 Changelog
