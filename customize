@@ -62,6 +62,8 @@ chown root:root /opt/local/etc/nginx/sites-available
 chmod -R a+r /opt/local/etc/nginx/sites-enabled
 chmod -R a+r /opt/local/etc/nginx/sites-available
 chown root:root /var/db/ssl
+find /var/db/ssl -type d | xargs chmod 700
+find /var/db/ssl -type f | xargs chmod 600
 
 # ln -s /opt/local/etc/nginx/sites-available/wordpress-ssl.conf /opt/local/etc/nginx/sites-enabled/
 ln -s /opt/local/etc/nginx/sites-available/wordpress.conf /opt/local/etc/nginx/sites-enabled/
